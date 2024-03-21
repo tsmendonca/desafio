@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
+        '/screen/usuarios': (context) => UsuariosScreen(), // Adicionando a rota para a tela de usuários
+        '/screen/posts': (context) => PostsScreen(), // Adicionando a rota para a tela de posts
       },
     );
   }
