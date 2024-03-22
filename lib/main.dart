@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:desafio_teia/screen/posts.dart';
 import 'package:desafio_teia/screen/usuarios.dart';
-import 'package:desafio_teia/screen/menu.dart'; 
-import 'package:desafio_teia/screen/lista_tuplas.dart'; 
+import 'package:desafio_teia/screen/menu.dart';
+import 'package:desafio_teia/screen/apelidos.dart'; 
 import 'package:desafio_teia/models/database.dart'; 
 import 'package:desafio_teia/models/users.dart'; 
 import 'package:uni_links/uni_links.dart';
 import 'dart:async';
+
 
 void main() {
   runApp(MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage(),
         '/screen/usuarios': (context) => UsuariosScreen(),
         '/screen/posts': (context) => PostsScreen(),
-        '/screen/lista_tuplas': (context) => ListaTuplasScreen(),
+        '/screen/apelidos': (context) => ApelidosScreen(),
       },
     );
   }
@@ -43,15 +44,17 @@ class _HomePageState extends State<HomePage> {
   String? _receivedLink;
   int? _receivedPat;
   late DatabaseHelper _databaseHelper;
+ 
+  
 
   @override
   void initState() {
     super.initState();
-     _databaseHelper = DatabaseHelper(); // Inicializa o DatabaseHelper
-    //_initDeepLinkListener();
-    //_processInitialLink();
-    // Simulando o recebimento de um link ao iniciar
-    _receivedPat = 97; // Valor simulado para _receivedPat
+    _databaseHelper = DatabaseHelper(); // Inicializa o DatabaseHelper
+   _initDeepLinkListener();
+   _processInitialLink();
+   // Caso necessário para testar pelo emulador retire o comentário da linha a seguir 
+   // _receivedPat = 97; // Valor simulado para _receivedPat
   }
 
   Future<void> _initDeepLinkListener() async {
@@ -96,32 +99,29 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _saveNickname() async {
-    if (_isButtonEnabled) {
-      final user = User(pat: _receivedPat ?? 0, nickname: _nicknameController.text);
+    Future<void> _saveNickname() async {
+  if (_receivedPat == null) {
+    setState(() {
+      _validationMessage = 'O PAT não foi recebido. Não é possível salvar o apelido.';
+    });
+  } else if (_isButtonEnabled) {
+    bool userInserted = await _databaseHelper.insertUser(_receivedPat!, _nicknameController.text);
 
-      bool userInserted = await DatabaseHelper().insertUser(user);
-
-      if (userInserted) {
-        setState(() {
-          _validationMessage = 'Apelido válido! Salvo: ${_nicknameController.text}';
-        });
-      } else {
-        setState(() {
-          _validationMessage = 'Erro ao salvar: O nickname ${user.nickname} já existe.';
-        });
-      }
+    if (userInserted) {
+      setState(() {
+        _validationMessage = 'Apelido salvo com sucesso!';
+      });
     } else {
       setState(() {
-        _validationMessage = 'Apelido inválido! Deve conter 3-20 caracteres alfanuméricos.';
+        _validationMessage = 'Erro ao salvar: O nickname ${_nicknameController.text} já existe.';
       });
     }
+  } else {
+    setState(() {
+      _validationMessage = 'Apelido inválido! Deve conter 3-20 caracteres alfanuméricos.';
+    });
   }
-
-
-
-
-
+}
 
 
 

@@ -1,16 +1,26 @@
-# desafio_teia
+# Desafio Teia
 
-A new Flutter project.
+Desafio Teia é um aplicativo Flutter desenvolvido para resolver um desafio específico.
 
-## Getting Started
+## Sobre o Projeto
 
-This project is a starting point for a Flutter application.
+Este projeto foi criado como parte de um desafio e tem como objetivo principal lidar com deep links em um aplicativo Flutter para receber um parâmetro "PAT" e salvar apelidos associados a esse parâmetro.
 
-A few resources to get you started if this is your first Flutter project:
+## Recursos
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- O aplicativo recebe um parâmetro "PAT" por meio de deep links.
+- Os apelidos podem ser salvos no banco de dados associados ao "PAT" recebido.
+- A validação é feita para garantir que os apelidos atendam a determinados critérios.
+- O usuário é informado caso o "PAT" não seja recebido e o salvamento do apelido é bloqueado nesse caso.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Como Começar
+
+Este projeto é um ponto de partida para uma aplicação Flutter. Você pode clonar este repositório e iniciar seu próprio desenvolvimento com base nele.
+
+### Pré-requisitos
+
+Certifique-se de ter o Flutter instalado em sua máquina. Para mais informações sobre como começar com o Flutter, consulte a [documentação online](https://docs.flutter.dev/get-started/install).
+
+### Instalação
+
+1. Clone este repositório: git clone https://github.com/tsmendonca/desafio_teia.git

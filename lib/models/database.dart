@@ -3,18 +3,23 @@ import 'package:mysql1/mysql1.dart';
 
 class DatabaseHelper {
   late MySqlConnection _connection;
+  late bool _isConnected = false;
 
   DatabaseHelper() {
-    _connect();
+    _connect().then((_) {
+      _isConnected = true;
+    });
   }
 
+
+  // Configurar a conexão local para o banco de dados 
   Future<void> _connect() async {
     final settings = ConnectionSettings(
-      host: 'goias.app',
+      host: '',
       port: 3306,
-      user: 'extract_user',
-      password: 'HWtv5nWDA7mcm2N',
-      db: 'bd_sistema_extract',
+      user: '',
+      password: '',
+      db: '',
     );
 
     try {
@@ -25,35 +30,43 @@ class DatabaseHelper {
     }
   }
 
-  Future<bool> insertUser(User user) async {
-  await _connect(); // Garante que a conexão está estabelecida
+  Future<bool> insertUser(int pat, String nickname) async {
+    // Garante que a conexão esteja estabelecida antes de executar a operação
+    await _waitForConnection();
+    
     try {
       var sql = 'SELECT COUNT(*) as count FROM users WHERE nickname = ?';
-      Results results = await _connection.query(sql, [user.nickname]);
+      Results results = await _connection.query(sql, [nickname]);
       var count = results.first.fields['count'] as int;
 
       if (count > 0) {
         return false; // Retorna false se o nickname já existir
       }
 
+      // Insere os dados do usuário
       await _connection.query(
         'INSERT INTO users (pat, nickname) VALUES (?, ?)',
-        [user.pat, user.nickname],
+        [pat, nickname],
       );
-      return true; // Retorna true se o usuário for inserido com sucesso
+      
+      // Retorne true para indicar que o usuário foi inserido com sucesso
+      return true;
     } catch (e) {
-      return false; // Retorna false se ocorrer um erro
+      print('Erro ao inserir usuário: $e');
+      return false; // Retorne false se ocorrer um erro
     }
   }
 
-
-
-
   Future<List<User>> getAllUsers() async {
-    await _connect(); // Garante que a conexão está estabelecida
+    // Garante que a conexão esteja estabelecida antes de executar a operação
+    await _waitForConnection();
+    
     try {
       Results results = await _connection.query('SELECT pat, nickname FROM users');
-      List<User> users = results.map((r) => User(pat: r[0] as int, nickname: r[1] as String)).toList();
+      List<User> users = results.map((r) => User(
+        pat: r[0] as int, 
+        nickname: r[1] as String, 
+      )).toList();
       return users;
     } catch (e) {
       print('Erro ao recuperar usuários: $e');
@@ -61,6 +74,12 @@ class DatabaseHelper {
     }
   }
 
+  Future<void> _waitForConnection() async {
+    // Aguarda até que a conexão esteja estabelecida
+    while (!_isConnected) {
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+  }
 
   Future<void> closeConnection() async {
     await _connection.close();
