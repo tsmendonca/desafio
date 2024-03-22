@@ -20,6 +20,9 @@ Este projeto é um ponto de partida para uma aplicação Flutter. Você pode clo
 ### Pré-requisitos
 
 Certifique-se de ter o Flutter instalado em sua máquina. Para mais informações sobre como começar com o Flutter, consulte a [documentação online](https://docs.flutter.dev/get-started/install).
+Necessário atualizar as dependências. 
+Necessário banco de dados MySql conforme exemplo em anexo. 
+Necessário atualizar as variáveis de conexão ao banco de dados em lib/models/database.dart
 
 ### Instalação
 
