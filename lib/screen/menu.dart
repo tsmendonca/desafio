@@ -14,9 +14,9 @@ class MenuScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Apelidos Salvos'),
+            title: Text('Lista Tuplas'),
             onTap: () {
-              Navigator.pushNamed(context, '/screen/apelidos');
+              Navigator.pushNamed(context, '/screen/lista_tuplas');
             },
           ),
           ListTile(
