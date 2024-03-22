@@ -125,13 +125,15 @@ class _HomePageState extends State<HomePage> {
 
 
 
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Página Inicial'),
       ),
-      drawer: MenuScreen(),
+      drawer: Drawer(
+        child: MenuScreen(),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -154,12 +156,17 @@ class _HomePageState extends State<HomePage> {
               child: Text('Salvar'),
             ),
             SizedBox(height: 20),
-            Text(_validationMessage),
+            if (_validationMessage.isNotEmpty)
+              Text(
+                _validationMessage,
+                style: TextStyle(color: Color.fromARGB(255, 27, 147, 239)),
+              ),
           ],
         ),
       ),
     );
   }
+
 
   initUniLinks() {}
 }

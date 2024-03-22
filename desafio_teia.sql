@@ -38,11 +38,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `pat`, `nickname`) VALUES
-(9, 97, 'yydbevsu876'),
-(10, 97, '1234'),
-(11, 97, '11gjfgjuh45kj4ghk'),
-(12, 76, 'setenta'),
-(13, 97, '1234567890');
+(9, 10, 'desafioTeia'),
+(10, 15, '1234'),
+(11, 97, 'tsmendonca'),
+(12, 76, 'Usuario15'),
+(13, 15, 'UserAdmin');
 
 --
 -- Índices para tabelas despejadas

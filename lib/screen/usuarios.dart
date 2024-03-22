@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:desafio_teia/screen/menu.dart';
 
-class UsuariosScreen extends StatefulWidget {
-  @override
-  _UsuariosScreenState createState() => _UsuariosScreenState();
-}
-
 class UserDetailsScreen extends StatelessWidget {
   final Map<String, dynamic> user;
 
@@ -60,6 +55,11 @@ class UserDetailsScreen extends StatelessWidget {
   }
 }
 
+class UsuariosScreen extends StatefulWidget {
+  @override
+  _UsuariosScreenState createState() => _UsuariosScreenState();
+}
+
 class _UsuariosScreenState extends State<UsuariosScreen> {
   List<dynamic> _allUsers = [];
 
@@ -98,23 +98,26 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
           : ListView.builder(
               itemCount: _allUsers.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_allUsers[index]['name']),
-                  subtitle: Text(_allUsers[index]['email']),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserDetailsScreen(user: _allUsers[index]),
-                      ),
-                    );
-                  },
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Card(
+                    elevation: 2,
+                    child: ListTile(
+                      title: Text(_allUsers[index]['name']),
+                      subtitle: Text(_allUsers[index]['email']),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserDetailsScreen(user: _allUsers[index]),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 );
               },
             ),
     );
   }
 }
-
-
-

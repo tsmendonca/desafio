@@ -57,30 +57,48 @@ class _PostsScreenState extends State<PostsScreen> {
       ),
       body: _posts.isEmpty
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _posts.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_posts[index]['title'] ?? ''),
-                  subtitle: Text(_posts[index]['body'] ?? ''),
-                );
-              },
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _posts.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          elevation: 2,
+                          child: ListTile(
+                            title: Text(
+                              _posts[index]['title'] ?? '',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(_posts[index]['body'] ?? ''),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Página $_currentPage'),
+                      SizedBox(width: 20),
+                      IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: _previousPage,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.arrow_forward),
+                        onPressed: _nextPage,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: _previousPage,
-            ),
-            IconButton(
-              icon: Icon(Icons.arrow_forward),
-              onPressed: _nextPage,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

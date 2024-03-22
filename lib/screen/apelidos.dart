@@ -35,16 +35,32 @@ class _ApelidosScreenState extends State<ApelidosScreen> {
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: _users.length,
-              itemBuilder: (context, index) {
-                final user = _users[index];
-                return ListTile(
-                  title: Text(user.nickname),
-                  subtitle: Text('PAT: ${user.pat}'),
-                );
-              },
-            ),
+          : _users.isEmpty
+              ? Center(
+                  child: Text(
+                    'Nenhum apelido encontrado.',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: _users.length,
+                  itemBuilder: (context, index) {
+                    final user = _users[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Card(
+                        elevation: 2,
+                        child: ListTile(
+                          title: Text(
+                            'Apelido: ${user.nickname}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text('PAT: ${user.pat}'),
+                        ),
+                      ),
+                    );
+                  },
+                ),
     );
   }
 }
